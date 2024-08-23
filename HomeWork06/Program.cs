@@ -9,17 +9,18 @@ using System.Threading.Tasks;
 
 namespace HomeWork06
 {
-    internal class Program
+    public class ContactManagement
     {
-        static void AddContact(string key,  int value, Dictionary<string, int> contact)
+        private Dictionary<string, int> contact = new Dictionary<string, int>();
+        public void AddContact(string key, int value, Dictionary<string, int> contact)
         {
             contact.Add(key, value);
         }
-        static void ContactRemoval(string key, int value, Dictionary<string, int> contact)
+        public void ContactRemoval(string key, int value, Dictionary<string, int> contact)
         {
             contact.Remove(key);
         }
-        static void ContactSearch(string key, int value, Dictionary<string, int> contact)
+        public void ContactSearch(string key, int value, Dictionary<string, int> contact)
         {
             string keySearch = Console.ReadLine();
             if (key == keySearch)
@@ -27,7 +28,7 @@ namespace HomeWork06
                 Console.WriteLine($"{contact[keySearch]}");
             }
         }
-        static void DisplayAllContacts(Dictionary<string, int> contacts)
+        public void DisplayAllContacts(Dictionary<string, int> contacts)
         {
             if (contacts.Count == 0)
             {
@@ -44,17 +45,21 @@ namespace HomeWork06
                 }
             }
         }
-        static void AddList(string student, List<string> list)
+    }
+    public class StudentManagement
+    {
+       private List<string> list = new List<string>();
+        public void AddList(string student, List<string> list)
         {
-            
-           list.Add(student);
+
+            list.Add(student);
         }
-        static void RemoveStudent(string student, List<string> list)
+        public void RemoveStudent(string student, List<string> list)
         {
 
             list.Remove(student);
         }
-        static void ContainStudent(string student, List<string> list)
+        public void ContainStudent(string student, List<string> list)
         {
             if (list.Contains(student))
             {
@@ -65,23 +70,32 @@ namespace HomeWork06
                 Console.WriteLine("There is no such a student");
             }
         }
-        static void StudentCount(List<string> list)
+        public void StudentCount(List<string> list)
         {
             Console.WriteLine($"Student count: {list.Count}");
         }
-        static void AddCustomer(string customer, Queue<string> queue)
+    }
+    public class QueueManagement
+    {
+        private Queue<string> queue = new Queue<string>();
+        public void AddCustomer(string customer, Queue<string> queue)
         {
             queue.Enqueue(customer);
         }
-        static void ServeCustomer( Queue<string> queue)
+        public void ServeCustomer(Queue<string> queue)
         {
             Console.WriteLine(queue.Dequeue());
         }
-        static void CustomerCount(Queue<string> queue)
+        public void CustomerCount(Queue<string> queue)
         {
             Console.WriteLine(queue.Count());
         }
-        static void AddBook(Hashtable books)
+        
+    }
+    public class LibraryManagement
+    {
+        private Hashtable books = new Hashtable();
+         public void AddBook(Hashtable books)
         {
             string code = Console.ReadLine();
 
@@ -96,12 +110,12 @@ namespace HomeWork06
             books.Add(code, title);
 
         }
-        static void RemoveBook(Hashtable books)
+        public void RemoveBook(Hashtable books)
         {
             string code = Console.ReadLine();
             books.Remove(code);
         }
-        static void SearchBook(Hashtable books)
+        public void SearchBook(Hashtable books)
         {
             string code = Console.ReadLine();
             if (books.ContainsKey(code))
@@ -113,12 +127,20 @@ namespace HomeWork06
                 Console.WriteLine("Book with this code doesn't exist");
             }
         }
-        static void DisplayAllBooks(Hashtable books)
+        public void DisplayAllBooks(Hashtable books)
         {
             Console.WriteLine(books.Count);
         }
-            static void Main(string[] args)
+    }
+    internal class Program
+    {
+
+
+
+        
+        static void Main(string[] args)
         {
+            var contactManager = new ContactManagement();
             Dictionary<string, int> contact = new Dictionary<string, int>();
             string key = Console.ReadLine();
             int value = Convert.ToInt32(Console.ReadLine());
@@ -127,18 +149,19 @@ namespace HomeWork06
             int task = Convert.ToInt32(Console.ReadLine());
             switch (task)
             {
-                case 1:AddContact(key, value, contact);
+                case 1:contactManager.AddContact(key, value, contact);
                 break;
-                case 2:ContactRemoval(key, value, contact);
+                case 2:contactManager.ContactRemoval(key, value, contact);
                 break;
-                case 3:ContactSearch(key, value, contact);
+                case 3:contactManager.ContactSearch(key, value, contact);
                 break;
-                case 4:DisplayAllContacts( contact);
+                case 4:contactManager.DisplayAllContacts( contact);
                 break;
                 default: Console.WriteLine($"There is no such a task as {task}");
                             break;
 
             }
+            var studentManager = new StudentManagement();
             string student = Console.ReadLine();
             List<string> students = new List<string>();
 
@@ -146,49 +169,51 @@ namespace HomeWork06
 
             switch (task1)
             {
-                case 1: AddList(student, students);
+                case 1: studentManager.AddList(student, students);
                     break;
-                case 2: RemoveStudent(student, students);
+                case 2: studentManager.RemoveStudent(student, students);
                     break;
-                case 3: ContainStudent(student, students);
+                case 3: studentManager.ContainStudent(student, students);
                     break;
-                case 4: StudentCount(students);
+                case 4: studentManager.StudentCount(students);
                     break;
                 default:
                     Console.WriteLine($"There is no such a task1 as {task}");
                     break;
             }
+            var queueManager = new QueueManagement();
             string customer = Console.ReadLine();
             Queue<string> queue = new Queue<string>();
             int task2 = Convert.ToInt32(Console.ReadLine());
             switch (task2)
             {
-                case 1: AddCustomer(customer, queue);
+                case 1: queueManager.AddCustomer(customer, queue);
                     break;
-                case 2: ServeCustomer(queue);
+                case 2: queueManager.ServeCustomer(queue);
                     break;
-                case 3: CustomerCount(queue);
+                case 3: queueManager.CustomerCount(queue);
                     break;
                 default: Console.WriteLine($"There is no such task2 as {task2}");
                     break;
 
             
             }
+            var libraryManager = new LibraryManagement();
             Hashtable books = new Hashtable();
             int task3 = Convert.ToInt32(Console.ReadLine());
             switch (task3)
             {
                 case 1:
-                    AddBook(books);
+                    libraryManager.AddBook(books);
                     break;
                 case 2:
-                    RemoveBook(books);
+                    libraryManager.RemoveBook(books);
                     break;
                 case 3:
-                    SearchBook(books);
+                    libraryManager.SearchBook(books);
                     break;
                 case 4:
-                    DisplayAllBooks(books);
+                    libraryManager.DisplayAllBooks(books);
                     break;
                 default:
                     Console.WriteLine($"There is no such task3 as {task3}");
